@@ -162,4 +162,15 @@ This could result in security issue, for example, if your application looks at t
 
 ### SSL Port Exposure
 
-When your app is served from port `80` then the `/home/dokku/APP/nginx.conf` file will automatically be updated to instruct nginx to respond to ssl on port 443 as a new cert is added.  If your app uses a non-standard port (perhaps you have a dockerfile deploy exposing port `99999`) you may need to manually expose an ssl port via `dokku proxy:ports-add <APP> https:443:99999`.  
+When your app is served from port `80` then the `/home/dokku/APP/nginx.conf` file will automatically be updated to instruct nginx to respond to ssl on port 443 as a new cert is added.  If your app uses a non-standard port (perhaps you have a dockerfile deploy exposing port `99999`) you may need to manually expose an ssl port via `dokku proxy:ports-add <APP> https:443:99999`. 
+
+
+## SPDY/HTTP2 support
+Currently the SPDY/HTTP2 support is limited to the following Nginx versions:
+
+| protocol | supported Nginx version | human spec |
+|---|---|---|
+| SPDY | `>1.9.5 <1.10` | a version between `1.9.5` and before `1.10`|
+| HTTP2 | `>=2` or `>1.11.5, >=1.12` | any version after `2.0` or after `1.11.5` or after `1.12`|
+
+Dokku will generate the correct configuration based on the supported protocols in your specific Nginx.
